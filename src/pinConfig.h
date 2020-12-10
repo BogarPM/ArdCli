@@ -11,6 +11,8 @@
 //Types of peripherals
 #define Serial_Peripheral 4
 
+
+
 class pinConfig
 {
 private:

@@ -14,11 +14,15 @@ DaqArduino::~DaqArduino(){
 void DaqArduino::init(){
     //Serial.println("From init function");
 }
-
+//Run this function on the main loop function
 void DaqArduino::daqLoop(){
-    Serial.println("from loop");
-    _pins.toggle();
-    //deiay()
+    STREAM.println("from loop");
+    if(_pinConfig){
+        for(int i = 0;i<MAX_PINS;i++){
+            
+        }
+    }
+    //_pins.toggle();
     delay(20);
 }
 
@@ -27,5 +31,48 @@ void DaqArduino::log(Print& stream){
 }
 
 void DaqArduino::addPin(int pin, int type, bool stat){
-    _pins = pinConfig(pin,type,stat);
+
+    //_pins = pinConfig(pin,type,stat);
 }
+
+
+/*Format for recieving the json Pin-Configuration Object
+{
+    "pn": {
+        "pin": pin_number,
+        "type": gpio_type,
+        "status": defalut_value
+    }
+}
+
+*/
+
+void DaqArduino::setupPins(char* json){
+    DeserializationError err = deserializeJson(_doc,json);
+    if(err){
+        STREAM.println(err.f_str());
+        return;
+    }
+    for(int i = 1;i<MAX_PINS +1;i++){
+        char pname[2] = "pn";   //Pin name: p1, p2, p3, ... , pn
+        //Convert int i -> char
+        char ichar[2];
+        String str = String(i);
+        str.toCharArray(ichar,2);
+        pname[1] = ichar[0];
+        /////////////////////////////////////////
+        int pin = _doc[pname][PIN_PARAMETER];
+        int type = _doc[pname][TYPE_PARAMETER];
+        bool st = _doc[pname][STATUS_PARAMETER];
+        _pins[i-1] = pinConfig(pin,type,st);
+    }
+    int p1 = _doc["p4"]["pin"];
+    int type = _doc["p4"]["type"];
+    STREAM.print("Variable P1: ");
+    STREAM.println(p1);
+    STREAM.print("Type for P1: ");
+    STREAM.println(type);
+    _pinConfig = 1;
+
+}
+
