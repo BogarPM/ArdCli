@@ -3,13 +3,14 @@
 
 #include<Arduino.h>
 //#include<pinConfig.h>
-#include<Pin.h>
+#include "./Pin.h"
 
 #define PWM_MODE 1
 
 
 class DigitalPin: public Pin {
     public:
+        DigitalPin();
         DigitalPin(int pin);
         DigitalPin(int pin, int mode = INPUT, bool status = LOW);
         ~DigitalPin();
@@ -20,9 +21,11 @@ class DigitalPin: public Pin {
 
         bool get();
 
-    private:
+    protected:
         int _mode;
         bool _status;
 
 
 };
+
+#endif

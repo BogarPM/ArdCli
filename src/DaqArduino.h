@@ -8,13 +8,15 @@
 #define TYPE_PARAMETER "type"
 #define STATUS_PARAMETER "st"
 
-#define MAX_PINS 20
+#define MAX_PINS 10
 #define JSON_DOC_LENGHT 300
 
 
 #include <Arduino.h>
 #include<pinConfig.h>
 #include<ArduinoJson.h>
+#include<./pinModel/Pin.h>
+#include<./pinModel/DigitalPin.h>
 
 class DaqArduino
 {
@@ -26,7 +28,8 @@ private:
     bool _pinConfig; //if true: pins are already configured
     bool _statusInterchange; //allows the data transmit between Arduino and ESP8266
 
-    pinConfig _pins[MAX_PINS];
+    Pin _pins[MAX_PINS];
+    DigitalPin _digitals[MAX_PINS];
     StaticJsonDocument<JSON_DOC_LENGHT> _doc;   //thougth to pass small json objects when a change is detected
                                     //in the pins
 

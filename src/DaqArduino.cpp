@@ -1,5 +1,7 @@
 #include<Arduino.h>
 #include<DaqArduino.h>
+#include<./pinModel/Pin.h>
+#include<./pinModel/DigitalPin.h>
 #include<pinConfig.h>
 
 DaqArduino::DaqArduino(){
@@ -21,7 +23,7 @@ void DaqArduino::daqLoop(){
         for(int i = 0;i<MAX_PINS;i++){
             if(_pins[i].pin()!=0){
                 STREAM.println();
-                _pins[i].toggle();
+                _digitals[i].toggle();
             }else{
                 break;
             }
@@ -71,7 +73,10 @@ void DaqArduino::setupPins(char* json){
         if(pin==0){break;}
         int type = _doc[pname][TYPE_PARAMETER];
         bool st = _doc[pname][STATUS_PARAMETER];
-        _pins[i-1] = pinConfig(pin,type,st);
+        if(type == DIGITAL_PIN){
+            _digitals[i-1] = DigitalPin(pin,OUTPUT,st); //Correct this line
+        }
+        
     }
     /*int p1 = _doc["p1"]["pin"];
     int type = _doc["p1"]["type"];
