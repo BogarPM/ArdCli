@@ -26,6 +26,9 @@ public:
     pinConfig(int pin, int type = Digital_IO_Pin, bool initStat = 1);
     ~pinConfig();
     void toggle();
+    int pin();
+    int type();
+    bool stat();
 };
 
 #endif

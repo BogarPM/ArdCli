@@ -19,7 +19,12 @@ void DaqArduino::daqLoop(){
     STREAM.println("from loop");
     if(_pinConfig){
         for(int i = 0;i<MAX_PINS;i++){
-            
+            if(_pins[i].pin()!=0){
+                STREAM.println()
+                _pins[i].toggle();
+            }else{
+                break;
+            }
         }
     }
     //_pins.toggle();
@@ -62,16 +67,17 @@ void DaqArduino::setupPins(char* json){
         pname[1] = ichar[0];
         /////////////////////////////////////////
         int pin = _doc[pname][PIN_PARAMETER];
+        if(pin==0){break;}
         int type = _doc[pname][TYPE_PARAMETER];
         bool st = _doc[pname][STATUS_PARAMETER];
         _pins[i-1] = pinConfig(pin,type,st);
     }
-    int p1 = _doc["p4"]["pin"];
-    int type = _doc["p4"]["type"];
+    /*int p1 = _doc["p1"]["pin"];
+    int type = _doc["p1"]["type"];
     STREAM.print("Variable P1: ");
     STREAM.println(p1);
     STREAM.print("Type for P1: ");
-    STREAM.println(type);
+    STREAM.println(type);*/
     _pinConfig = 1;
 
 }

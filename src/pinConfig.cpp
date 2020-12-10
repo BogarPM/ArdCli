@@ -26,10 +26,22 @@ pinConfig::~pinConfig(){
 }
 
 void pinConfig::toggle(){
-    Serial.println("From toggle");
+    //Serial.println("From toggle");
     if(_type == Digital_IO_Pin){
         _stat = !_stat;
         digitalWrite(_pin,_stat);
         Serial.println("it should be toggling");
     }
+}
+
+int pinConfig::pin(){
+    return _pin;
+}
+
+int pinConfig::type(){
+    return _type;
+}
+
+bool pinConfig::stat(){
+    return _stat;
 }
