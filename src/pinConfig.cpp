@@ -11,11 +11,12 @@ pinConfig::pinConfig(int pin, int type, bool initStat){
     _pin = pin;
     _type = type;
     _stat = initStat;
-    if(type==Digital_IO_Pin){
-        Serial.println("Configured as the init stat parameter");
-        pinMode(pin,initStat);
-    }else if(type==Digital_PWM_Pin){
+    if(type==Digital_OUTPUT_PIN){
+        //Serial.println("Configured as the init stat parameter");
         pinMode(pin,OUTPUT);
+        digitalWrite(pin, initStat);
+    }else if(type==Digital_INPUT_PIN){
+        pinMode(pin,INPUT);
     }
 }
 
@@ -27,7 +28,7 @@ pinConfig::~pinConfig(){
 
 void pinConfig::toggle(){
     //Serial.println("From toggle");
-    if(_type == Digital_IO_Pin){
+    if(_type == Digital_OUTPUT_PIN){
         _stat = !_stat;
         digitalWrite(_pin,_stat);
         Serial.println("it should be toggling");

@@ -35,7 +35,7 @@ public:
     ~DaqArduino();
     void daqLoop();
     void log(Print& stream);
-    void addPin(int pin, int type = Digital_IO_Pin, bool stat = 1);
+    void addPin(int pin, int type = Digital_INPUT_PIN, bool stat = 1);
     void setupPins(char* json);
 };
 

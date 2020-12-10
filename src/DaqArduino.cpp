@@ -20,7 +20,7 @@ void DaqArduino::daqLoop(){
     if(_pinConfig){
         for(int i = 0;i<MAX_PINS;i++){
             if(_pins[i].pin()!=0){
-                STREAM.println()
+                STREAM.println();
                 _pins[i].toggle();
             }else{
                 break;
@@ -56,6 +56,7 @@ void DaqArduino::setupPins(char* json){
     DeserializationError err = deserializeJson(_doc,json);
     if(err){
         STREAM.println(err.f_str());
+        STREAM.println("Error from inside the class");
         return;
     }
     for(int i = 1;i<MAX_PINS +1;i++){

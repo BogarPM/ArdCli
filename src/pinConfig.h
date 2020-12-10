@@ -5,11 +5,13 @@
 
 
 //Types of pin
-#define Digital_IO_Pin 1
-#define Analog_Pin 2
-#define Digital_PWM_Pin 3
+#define Digital_OUTPUT_PIN 1
+#define Digital_INPUT_PIN 2
+#define Analog_PIN 3
+#define Digital_PWM_PIN 4
 //Types of peripherals
-#define Serial_Peripheral 4
+
+#define Serial_Peripheral 5
 
 
 
@@ -23,7 +25,7 @@ private:
 
 public:
     pinConfig();
-    pinConfig(int pin, int type = Digital_IO_Pin, bool initStat = 1);
+    pinConfig(int pin, int type = Digital_INPUT_PIN, bool initStat = 1);
     ~pinConfig();
     void toggle();
     int pin();
